@@ -8,22 +8,7 @@ class ML:
         temp = [[0 for i in range(cols)] for j in range(rows)]
         self.matrix = temp
         self.update_self(matrix)
-        self.temp_col_list = [i for i in  range(len(self.matrix[0]))]
-
-    def pass_via(self, col):
-        for row in range(len(self.matrix)):
-            if self.matrix[row][col] != 0:
-                return False
-        return True
-    
-    def start_passing(self):
-        temp =  random.choice(self.temp_col_list)
-        print(temp, self.pass_via(temp))
-        if not self.pass_via(temp):
-            self.temp_col_list.remove(temp)
-            self.start_passing()
         
-    
     def printt(self):
         plt.imshow(self.matrix, cmap='hot', interpolation='nearest')
         plt.colorbar()  # adds a color bar to the right
@@ -32,21 +17,37 @@ class ML:
     def update_val(self, row, col, val):
         self.matrix[row][col] = min(self.matrix[row][col] + val, 1)
 
-    
     def update_self(self, matrix):
         """
         add 0.1 to each element which has 1 as neighbor
         """
         for row in range(len(matrix)):
             for col in range(len(matrix[0])):
-                if matrix[row][col] == 1:
-                    self.update_val(row, col, 1)
-                    # update neighbors
-                    # if row > 0:
-                    #     self.update_val(row-1, col, 0.2)
-                    # if row < len(matrix)-1:
-                    #     self.update_val(row+1, col, 0.2)
-                    # if col > 0:
-                    #     self.update_val(row, col-1, 0.2)
-                    # if col < len(matrix[0])-1:
-                    #     self.update_val(row, col+1, 0.2)
+                if matrix[row][col] != 0:
+                    self.update_val(row, col, matrix[row][col])
+                    inc = 0.05
+                    if row > 0:
+                        self.update_val(row-1, col, inc)
+                    if row < len(matrix)-1:
+                        self.update_val(row+1, col, inc)
+                    if col > 0:
+                        self.update_val(row, col-1, inc)
+                    if col < len(matrix[0])-1:
+                        self.update_val(row, col+1, inc)
+
+
+class Training:
+    def __init__(self, matrix, model):
+        self.matrix = matrix
+
+    def train1(self):
+        """
+        pass directly via column and remove all blocked columns
+        """
+        col_list = [i for i in  range(len(self.matrix[0]))]
+        for i in range(len(self.matrix[0])):
+            for row in range(len(self.matrix)):
+                if self.matrix[row][i] != 0:
+                    col_list.remove(i)
+                    break
+        return col_list
