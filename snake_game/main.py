@@ -2,18 +2,34 @@ import time
 from helper import *
 
 # init
-init_length = 2
+init_length = 5
 frame_width = 10
 frame_height = 10
 
 snake = Snake(frame_width, frame_height, init_length)
 snake.start_position()
-# # snake.move(MoveDirection.FORWARD)
+# snake.move(MoveDirection.FORWARD)
 # snake.move(MoveDirection.RIGHT)
-# # snake.move(MoveDirection.FORWARD)
+# snake.move(MoveDirection.RIGHT)
+# snake.move(MoveDirection.FORWARD)
 # print(snake.field)
 # print(snake.snake)
-# snake.move(MoveDirection.RIGHT)
+# snake.move(MoveDirection.FORWARD)
+# print(snake.field)
+# print(snake.snake)
+# snake.move(MoveDirection.FORWARD)
+# print(snake.field)
+# print(snake.snake)
+# snake.move(MoveDirection.FORWARD)
+# print(snake.field)
+# print(snake.snake)
+# snake.move(MoveDirection.LEFT)
+# print(snake.field)
+# print(snake.snake)
+# snake.move(MoveDirection.FORWARD)
+# print(snake.field)
+# print(snake.snake)
+# snake.move(MoveDirection.FORWARD)
 # print(snake.field)
 # print(snake.snake)
 # snake.move(MoveDirection.FORWARD)
@@ -39,6 +55,8 @@ while temp:
     print(snake.field)
     # time.sleep(1)
     print("-------------------------------------------------")
+
+print(snake.directions)
 
 
 

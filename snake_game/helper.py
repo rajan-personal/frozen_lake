@@ -46,6 +46,7 @@ class Snake:
         field = np.insert(field, 0, TileValue.WALL.value, axis=1)
         field = np.insert(field, breadth+1, TileValue.WALL.value, axis=1)
         self.field = field
+        self.directions = np.array([])
 
     def start_position(self):
         x, y = 6, 3
@@ -58,6 +59,9 @@ class Snake:
         self.snake = np.array([head_position, tail_position])
 
     def move(self, parent_move_dirr=MoveDirection.FORWARD):
+        if len(self.snake) == 0:
+            return False
+        self.directions = np.append(self.directions, parent_move_dirr)
         print(parent_move_dirr)
         # move the snake
         # remove last snake block
@@ -101,11 +105,13 @@ class Snake:
         # check if new head is in snake body or wall
         if self.field[new_head[1]][new_head[0]] in [TileValue.SNAKE.value, TileValue.WALL.value, TileValue.SNAKE_HEAD.value]:
             self.field = np.zeros((self.length, self.breadth))
+            self.snake = np.array([])
             return False
         if move_dirr == MoveDirection.FORWARD and len(self.snake) > 1:
             self.snake[0] = new_head
         else:
             self.snake = np.insert(self.snake, 0, new_head, axis=0)
+            self.snake[1][3] = parent_move_dirr
         self.field[new_head[1]][new_head[0]] = TileValue.SNAKE_HEAD.value
         
         return True
