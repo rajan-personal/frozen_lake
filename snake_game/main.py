@@ -47,13 +47,31 @@ snake.start_position()
 
 
 # game loop
-temp = True
-while temp:
-    direction = np.random.choice([MoveDirection.LEFT, MoveDirection.RIGHT, MoveDirection.FORWARD])
-    temp = snake.move(direction)
-    print(snake.snake)
+move = True
+while move:
+    dir_list = np.array([MoveDirection.LEFT, MoveDirection.RIGHT, MoveDirection.FORWARD])
+    temp = True
+    while len(dir_list):
+        direction = np.random.choice(dir_list)
+        curr_field = np.copy(snake.field)
+        curr_snake = np.copy(snake.snake)
+        curr_directions = np.copy(snake.directions)
+        temp = snake.move(direction)
+        if not temp:
+            snake.field = curr_field
+            snake.snake = curr_snake
+            snake.directions = curr_directions
+            dir_list = np.delete(dir_list, np.where(dir_list == direction))
+            continue
+        else:
+            break
+
+    if len(dir_list) == 0:
+        move = False
+
+    # print(snake.snake)
     print(snake.field)
-    # time.sleep(1)
+    time.sleep(0.5)
     print("-------------------------------------------------")
 
 print(snake.directions)

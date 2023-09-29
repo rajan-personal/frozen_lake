@@ -16,7 +16,7 @@ class Orientation(Enum):
 class TileValue(Enum):
     EMPTY = 0.0
     SNAKE = 1.1
-    SNAKE_HEAD = 1.2
+    SNAKE_HEAD = 2.2
     WALL = -1.0
     FOOD = 2.0
 
